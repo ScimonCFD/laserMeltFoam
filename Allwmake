@@ -1,0 +1,21 @@
+#!/bin/bash
+cd ${0%/*} || exit 1    # run from this directory
+
+targetType=""
+
+# Parse arguments for library compilation
+. $WM_PROJECT_DIR/wmake/scripts/AllwmakeParseArguments
+
+# Libraries
+(echo "Compiling rayTracingLaserSource"  && cd Libraries/rayTracingLaserSource && ./Allwmake $targetType $* 2>&1 | tee log.Allwmake && cd ../)
+(echo "Compiling geometricVoF" && cd Libraries/geometricVoF && ./Allwmake $targetType $* 2>&1 | tee log.Allwmake && cd ../)
+(echo "Compiling transportModels" && cd Libraries/transportModels/incompressible && ./Allwmake $targetType $* 2>&1 | tee log.Allwmake && cd ../)
+(echo "Compiling turbulenceModels" && cd Libraries/turbulenceModels/incompressible && ./Allwmake $targetType $* 2>&1 | tee log.Allwmake && cd ../)
+
+# Utilities
+(echo "Compiling setSolidFraction" && cd Utilities/setSolidFraction && ./Allwmake $targetType $* 2>&1 | tee log.Allwmake && cd ../)
+
+
+# Solver
+(echo "Compiling laserMeltFoam" && cd laserMeltFoam && ./Allwmake $targetType $* 2>&1 | tee log.Allwmake && cd ../)
+
