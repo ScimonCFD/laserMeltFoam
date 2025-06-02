@@ -1,0 +1,7 @@
+    dep: laserMeltFoam.C
+    Ctoo: laserMeltFoam.C
+laserMeltFoam.C:64:10: fatal error: 'isoAdvection.H' file not found
+   64 | #include "isoAdvection.H"
+      |          ^~~~~~~~~~~~~~~~
+1 error generated.
+make: *** [/Volumes/OpenFOAM-v2412/build/darwin64ClangDPInt32Opt/userFiles/laserMeltFoam/laserMeltFoam/laserMeltFoam.o] Error 1

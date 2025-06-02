@@ -14,39 +14,46 @@ FoamFile
     object      laserProperties;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
-	r0		  [0 1 0 0 0 0 0] 25e-6;
-	kappaM		  0.3;
-	emS		  0.4;
-	emL		  0.1;
-	laserPatchName	  topWall;
 
-  ray_tracing_on false;
+laserRadius 25e-6; // The radius of the laser
 
-  timeVsLaserPosition
-  {
-      file    "$FOAM_CASE/constant/timeVsLaserPosition";
-      outOfBounds clamp;
-  }
+ray_tracing_on false;
 
-  timeVsLaserPower
-  {
-      file    "$FOAM_CASE/constant/timeVsLaserPower";
-      outOfBounds clamp; 
-  }
+timeVsLaserPosition
+{
+    file    "$FOAM_CASE/constant/timeVsLaserPosition";
+    outOfBounds clamp;
+}
 
-// Laser angle
-V_incident (0 1 0);//(0 1 0);//NORMALISED IN CODE
+timeVsLaserPower
+{
+    file    "$FOAM_CASE/constant/timeVsLaserPower";
+    outOfBounds clamp; 
+}
+
+// ----------------------------------------------------------------------
+// Standard laser model parameters 
+kappaM		  0.3;
+emS	        0.4;
+emL	        0.1;
+laserPatchName	  topWall;
+
+// ----------------------------------------------------------------------
+// Ray-tracing model parameters
+N_sub_divisions	1;
+V_incident (0 1 0);//(0 1 0);// Laser angle - NORMALISED IN CODE
+wavelength	1.064e-6;
+e_num_density	5.83e29;
+debug no;
+Radius_Flavour	2.0;
 
 // Laser radius
-laserRadius 25e-6;
 //HS_bg 0.0;//20
 //HS_velocity 0.0;//6.0;
 //HS_lg 1e-3;
 //HS_Q 2000;//2000.0;//
 
 // Laser discretisation
-N_sub_divisions	1;
-
 // Laser oscillations about the mean path
 //For linear path set oscAmpX=oscAmpz=0
 //For sine path set oscAmpz=0
@@ -57,21 +64,11 @@ N_sub_divisions	1;
 //HS_oscFreqX 0;
 //HS_oscFreqZ 0;
 
-wavelength	1.064e-6;
-e_num_density	5.83e29;
 //elec_resistivity	1.0e-6; depricated
 
 // Use local search: defaults to yes
 //useLocalSearch yes;
 
 // Print extra debug information: defaults to no
-debug no;
-
-Radius_Flavour	2.0;
-
-
-
-
-
 
 // ************************************************************************* //

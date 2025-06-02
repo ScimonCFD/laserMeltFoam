@@ -160,7 +160,6 @@ void laserHeatSource::updateDeposition
     const volScalarField& resistivity_in
 )
 {
-  Info<< "here in updateDeposition";
 
     // Reset fields
     // Do we need to update laserBoundary?

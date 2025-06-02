@@ -9,5 +9,6 @@ application="$(getApplication)"
 cp -r initial 0
 runApplication blockMesh 
 runApplication setSolidFraction
+runApplication transformPoints -rotate "((0 1 0) (0 0 1))" # this is needed in case of the ray tracing laser
 runApplication laserMeltFoam
 #------------------------------------------------------------------------------

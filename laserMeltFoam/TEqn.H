@@ -32,13 +32,21 @@
     volScalarField fluxVc ((hC * TRef + SB * em * (Foam::pow(TRef, 4) + 3 * Foam::pow(T, 4)) - Qv) * delGradAlpha);
     // volScalarField fluxVc = (-hC*(T-TRef) - SB*em*(Foam::pow(T,4) - Foam::pow(TRef,4)) - Qv)*delGradAlpha;
     volScalarField fluxCc (-(hC + 4 * SB * em * Foam::pow(T, 3)) * delGradAlpha);
+    
+    if (ray_tracing_on) // TODO  - this could be better
+    { 
+       laser_source = laser.deposition();
+    }
+    else
+    {
+       laser_source = laserFlux/delta;
+    }
 
-    fvScalarMatrix TEqn(fvm::ddt(rhoCp, T)  + fvm::div(rhoCpPhi, T, "div(phi,T)")  - fvm::SuSp(fvc::ddt(rhoCp) + fvc::div(rhoCpPhi), T)  - fvm::Sp(SI, T) - fvm::Sp(fluxCc, T) + fvc::div(rhoMPhi, gT) - fvm::laplacian(kEff, T) == SE + fluxVc + laser.deposition());
+    fvScalarMatrix TEqn(fvm::ddt(rhoCp, T)  + fvm::div(rhoCpPhi, T, "div(phi,T)")  - fvm::SuSp(fvc::ddt(rhoCp) + fvc::div(rhoCpPhi), T)  - fvm::Sp(SI, T) - fvm::Sp(fluxCc, T) + fvc::div(rhoMPhi, gT) - fvm::laplacian(kEff, T) == SE + fluxVc + laser_source);
 
     TEqn.relax();
 
     Tp = TEqn.solve();
-    // TEqn.solve();
     #include "liquidFraction.H"
 
     // perfRes = Tp.initialResidual();
@@ -57,15 +65,13 @@
       Warning 
           << "Temperature equation did not converge!" << endl;
     }
-    
+
   }
 
   // Update gT after TEqn update
   gT = liquidFraction(T, Tl, Ts);
   alphaL = alphaM * gT;
-
   ddtGT = fvc::ddt(gT);
-
   T.correctBoundaryConditions();
 
   // #include "updateProperties.H"

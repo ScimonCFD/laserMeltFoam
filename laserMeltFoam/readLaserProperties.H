@@ -8,7 +8,7 @@ IOdictionary laserProperties(
 
 const Switch ray_tracing_on = laserProperties.lookupOrDefault<Switch>("ray_tracing_on", false);
 
-if(ray_tracing_on){
+if(ray_tracing_on==true){
   Info << "\nRay-tracing: ON" <<endl;
   Info << "Using Ray-tracing laser model" <<endl;
   Info << "Don't forget to orient the mesh correctly (laser must be in the positive y axis)!\n" <<endl;
@@ -38,7 +38,7 @@ volScalarField em(
 
 word laserPatchName(word(laserProperties.lookup("laserPatchName")));
 
-const dimensionedScalar r0("r0", laserProperties); // Laser radius
+const dimensionedScalar r0("laserRadius",  dimensionSet(0, 1, 0, 0, 0, 0, 0) ,laserProperties.lookup("laserRadius")); // Laser radius
 dimensionedScalar t("t", dimensionSet(0, 0, 1, 0, 0, 0, 0), 0.0);
 dimensionedScalar Power("Power", dimensionSet(1, 2, -3, 0, 0, 0, 0), 0.0);
 dimensionedVector laserPos("laserPos", dimensionSet(0, 1, 0, 0, 0, 0, 0), vector(0.0, 0.0, 0.0));
@@ -81,3 +81,5 @@ volScalarField laserFlux(
         IOobject::AUTO_WRITE),
     mesh,
     dimensionedScalar("0", dimensionSet(1, 0, -3, 0, 0, 0, 0), 0.0));
+
+    

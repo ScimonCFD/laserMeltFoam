@@ -108,7 +108,7 @@ int main(int argc, char *argv[])
     #include "createCellColumns.H" //added
     #include "interfaceProperties.H" //added
 
-    #include "initCorrectPhi.H"
+    #include "initCorrectPhi.H" 
     #include "createUfIfPresent.H"
     #include "porousCourantNo.H"
     #include "setInitialDeltaT.H"

@@ -223,6 +223,17 @@ volScalarField SE(
     dimensionedScalar("0", dimensionSet(1, -1, -3, 0, 0, 0, 0), 0.0),
     zeroGradientFvPatchScalarField::typeName);
 
+  volScalarField laser_source(
+    IOobject(
+        "laser_source",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::NO_WRITE),
+    mesh,
+    dimensionedScalar("0", dimensionSet(1, -1, -3, 0, 0, 0, 0), 0.0),
+    zeroGradientFvPatchScalarField::typeName);
+
 dictionary controls = mesh.solutionDict().subDict("Controls");
 
 // ------------------------- ------------------------- ------------------------- ------------------------- -------------------------
@@ -393,7 +404,6 @@ volVectorField n_filtered
 const dimensionedScalar elec_resistivity_metal ("elec_resistivity", metal); //Molar mass of metal
 
 // dimensionedScalar elec_resistivity_metal("elec_resistivity",dimensionSet(1,3,-3,0,0),transportProperties_metal.lookup("elec_resistivity"));
-
 
         volScalarField electrical_resistivity//electrical resistivity of condensate only
     (

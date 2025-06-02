@@ -35,8 +35,6 @@ metalaverage = fvc::average(alphaM);
 laser.refineFlag() *= 0.0;
 laser.refineFlag() += metalaverage;
 
-
-
 alpha_filtered= alphaM;
 alpha_filtered.correctBoundaryConditions();
 
